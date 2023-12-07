@@ -2,7 +2,7 @@
 
 import time
 from watchdog.observers import Observer
-from handler import Handler
+from handler import FileOrganizerHandler
  
  
 class Watcher:
@@ -12,7 +12,7 @@ class Watcher:
         self.watch_directory = watch_directory
  
     def run(self):
-        event_handler = Handler()
+        event_handler = FileOrganizerHandler()
         self.observer.schedule(event_handler, self.watch_directory, recursive = True)
         self.observer.start()
         print("I am watching buddy")
