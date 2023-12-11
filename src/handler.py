@@ -7,6 +7,7 @@ class FileOrganizerHandler(FileSystemEventHandler):
     def __init__(self):
         self.executables_path = 'C:\\Users\\cristian.sanchezp\\Downloads\\executables'
         self.files_path = 'C:\\Users\\cristian.sanchezp\\Downloads\\files'
+        self.iso_path = 'C:\\Users\\cristian.sanchezp\\Downloads\\isos'
         self.wait_time = 300
         self.last_size = {}
 
@@ -23,7 +24,14 @@ class FileOrganizerHandler(FileSystemEventHandler):
             print(f'Skipping temporary file: {file_name}')
             return
 
-        new_path = os.path.join(self.executables_path, file_name) if file_name.endswith(".exe") or file_name.endswith(".msi") else  os.path.join(self.files_path, file_name)
+        new_path = ''
+        if file_name.endswith(".exe") or file_name.endswith(".msi"):
+            new_path = os.path.join(self.executables_path, file_name)
+        elif file_name.endswith('.iso'):
+            new_path = os.path.join(self.iso_path, file_name)
+        else: 
+            new_path = os.path.join(self.files_path, file_name)
+
         if os.path.exists(file_path):
             try:        
                 shutil.move(file_path, new_path)
